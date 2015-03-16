@@ -65,7 +65,7 @@ if __name__ == '__main__':
         try:
             status, jpg = generate_tweet()
             log.info(status)
-            #twitter, response = post_tweet(status, jpg)
+            twitter, response = post_tweet(status, jpg)
             break
         except Exception as e:
             log.warning(e)
