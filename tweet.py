@@ -14,7 +14,7 @@ from astropy.visualization import scale_image
 from secrets import *
 
 
-def get_random_fits_url(db_fn='rosetta-fits-files.txt'):
+def get_random_fits_url(db_fn='data/rosetta-fits-files.txt'):
     db = open(db_fn, 'r').readlines()
     idx = random.randint(0, len(db))
     return db[idx]
