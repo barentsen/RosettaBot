@@ -32,11 +32,11 @@ def save_list(output_fn, id_begin, id_end):
     for imageid in ProgressBar(range(id_begin, id_end)):
         time.sleep(1.)  # Be nice to ESA's servers
         try:
-            output.write(get_fits_url(imageid) + '\n')
+            output.write('{0},{1}\n'.format(imageid, get_fits_url(imageid)))
         except LinkNotFoundError:
             pass
     output.close()
 
 
 if __name__ == '__main__':
-    save_list('data/rosetta-fits-files.txt', 2130, 2427)
+    save_list('data/rosetta-fits-files.csv', 2130, 2427)

@@ -14,36 +14,31 @@ from astropy.visualization import scale_image
 from secrets import *
 
 
-def get_random_fits_url(db_fn='data/rosetta-fits-files.txt'):
+def select_random_image(db_fn='data/rosetta-fits-files.csv'):
     db = open(db_fn, 'r').readlines()
     idx = random.randint(0, len(db))
-    return db[idx]
+    return db[idx].split(',')
 
 
-def generate_tweet(fits_fn=None):
+def generate_tweet():
     """Generate a tweet and jpg.
-
-    Parameters
-    ----------
-    fits_fn : str (optional)
-        Path or url to FITS file. If `None`, a random file will be downloaded.
 
     Returns
     -------
     (status, jpg) : (str, str)
     """
-    # Open the FITS file
-    if fits_fn is None:  # Get a random url
-        fits_fn = get_random_fits_url()
-    log.info('Opening {0}'.format(fits_fn))
-    fts = fits.open(fits_fn)
+    imageid, fitsurl = select_random_image()
+    log.info('Opening {0}'.format(fitsurl))
+    fts = fits.open(fitsurl)
     # Create the status message
     imgtime = fts[0].header['IMG-TIME']
     instrument = fts[0].header['INSTRUME']
     exptime = fts[0].header['EXPTIME']
     timestr = Time(imgtime).datetime.strftime('%d %b %Y at %H:%M').lstrip("0")
+    url = 'http://imagearchives.esac.esa.int/picture.php?/{0}'.format(imageid)
     status = ('{0} image taken on {1}. '
-              'Exposure time: {2:.0f}s.'.format(instrument, timestr, exptime))
+              'Exposure time: {2:.0f}s. '
+              '{3}'.format(instrument, timestr, exptime, url))
     # Create the scaled jpg
     jpg_fn = '/tmp/rosettabot.jpg'
     image_scaled = scale_image(fts[0].data, scale='linear', percent=95)
@@ -69,7 +64,8 @@ if __name__ == '__main__':
         attempt_no += 1
         try:
             status, jpg = generate_tweet()
-            twitter, response = post_tweet(status, jpg)
+            log.info(status)
+            #twitter, response = post_tweet(status, jpg)
             break
         except Exception as e:
             log.warning(e)
