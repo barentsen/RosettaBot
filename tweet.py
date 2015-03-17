@@ -37,7 +37,7 @@ def generate_tweet():
     timestr = Time(imgtime).datetime.strftime('%d %b %Y at %H:%M').lstrip("0")
     url = 'http://imagearchives.esac.esa.int/picture.php?/{0}'.format(imageid)
     status = ('{0} image taken on {1}. '
-              'Exposure time: {2:.1f}s. '
+              'Exposure time: {2:.2f}s. '
               '{3}'.format(instrument, timestr, exptime, url))
     # Create the scaled jpg
     jpg_fn = '/tmp/rosettabot.jpg'
