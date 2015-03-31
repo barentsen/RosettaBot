@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Tweets a random Rosetta image as @RosettaBot."""
+"""Tweets a random Rosetta image as @RosettaBot.
+
+Note: for setting up a bot, see
+http://dghubble.com/blog/posts/twitter-app-write-access-and-bots/
+"""
 import random
 from twython import Twython
 from matplotlib.image import imsave
