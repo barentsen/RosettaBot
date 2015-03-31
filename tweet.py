@@ -45,7 +45,7 @@ def generate_tweet():
               '{3}'.format(instrument, timestr, exptime, url))
     # Create the scaled jpg
     jpg_fn = '/tmp/rosettabot.jpg'
-    image_scaled = scale_image(fts[0].data, scale='linear', percent=99)
+    image_scaled = scale_image(fts[0].data, scale='linear', min_percent=0., max_percent=100.)
     log.info('Writing {0}'.format(jpg_fn))
     imsave(jpg_fn, image_scaled, cmap=cm.gray)
     return (status, jpg_fn)
