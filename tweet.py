@@ -45,7 +45,7 @@ def generate_tweet():
               '{3}'.format(instrument, timestr, exptime, url))
     # Create the scaled jpg
     jpg_fn = '/tmp/rosettabot.jpg'
-    image_scaled = scale_image(fts[0].data, scale='linear', percent=95)
+    image_scaled = scale_image(fts[0].data, scale='linear', percent=99)
     log.info('Writing {0}'.format(jpg_fn))
     imsave(jpg_fn, image_scaled, cmap=cm.gray)
     return (status, jpg_fn)
@@ -69,6 +69,7 @@ if __name__ == '__main__':
         try:
             status, jpg = generate_tweet()
             log.info(status)
+            log.info('Saved {0}'.format(jpg))
             twitter, response = post_tweet(status, jpg)
             break
         except Exception as e:
