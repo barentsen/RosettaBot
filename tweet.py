@@ -15,6 +15,8 @@ from astropy.io import fits
 from astropy.time import Time
 from astropy.visualization import scale_image
 
+# Our own modules
+from entropy_crop import entropy_crop
 from secrets import *
 
 
@@ -43,9 +45,12 @@ def generate_tweet():
     status = ('{0} image taken on {1}. '
               'Exposure time: {2:.2f}s. '
               '{3}'.format(instrument, timestr, exptime, url))
-    # Create the scaled jpg
+    # Create the cropped and scaled image
+    image_cropped = entropy_crop(fts[0].data, width=512, height=256)
+    image_scaled = scale_image(image_cropped, scale='linear',
+                               min_percent=0, max_percent=100)
+    # Save the result as a JPG
     jpg_fn = '/tmp/rosettabot.jpg'
-    image_scaled = scale_image(fts[0].data, scale='linear', min_percent=0., max_percent=100.)
     log.info('Writing {0}'.format(jpg_fn))
     imsave(jpg_fn, image_scaled, cmap=cm.gray)
     return (status, jpg_fn)
