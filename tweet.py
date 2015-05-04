@@ -46,14 +46,14 @@ def generate_tweet():
               'Exposure time: {2:.2f}s. '
               '{3}'.format(instrument, timestr, exptime, url))
     # Create the cropped and scaled image
-    image_cropped = entropy_crop(fts[0].data, width=512, height=256)
+    image_cropped = entropy_crop(fts[0].data, width=640, height=320)
     image_scaled = scale_image(image_cropped, scale='linear',
                                min_percent=0.05, max_percent=99.95)
-    # Save the result as a JPG
-    jpg_fn = '/tmp/rosettabot.jpg'
-    log.info('Writing {0}'.format(jpg_fn))
-    imsave(jpg_fn, image_scaled, cmap=cm.gray)
-    return (status, jpg_fn)
+    # Save the result as an image
+    image_fn = '/tmp/rosettabot.png'
+    log.info('Writing {0}'.format(image_fn))
+    imsave(image_fn, image_scaled, cmap=cm.gray)
+    return (status, image_fn)
 
 
 def post_tweet(status, media_fn):
@@ -72,10 +72,10 @@ if __name__ == '__main__':
     while attempt_no < 10:
         attempt_no += 1
         try:
-            status, jpg = generate_tweet()
+            status, image_fn = generate_tweet()
             log.info(status)
-            log.info('Saved {0}'.format(jpg))
-            twitter, response = post_tweet(status, jpg)
+            log.info('Saved {0}'.format(image_fn))
+            twitter, response = post_tweet(status, image_fn)
             break
         except Exception as e:
             log.warning(e)
