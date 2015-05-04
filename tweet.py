@@ -38,11 +38,11 @@ def generate_tweet():
     fts = fits.open(fitsurl)
     # Create the status message
     imgtime = fts[0].header['IMG-TIME']
-    instrument = fts[0].header['INSTRUME']
+    instrument = fts[0].header['INSTRUME'][8:]
     exptime = fts[0].header['EXPTIME']
     timestr = Time(imgtime).datetime.strftime('%d %b %Y at %H:%M').lstrip("0")
     url = 'http://imagearchives.esac.esa.int/picture.php?/{0}'.format(imageid)
-    status = ('{0} image taken on {1}. '
+    status = ('#Rosetta image of #67P taken by #{0} on {1}. '
               'Exposure time: {2:.2f}s. '
               '{3}'.format(instrument, timestr, exptime, url))
     # Create the cropped and scaled image
