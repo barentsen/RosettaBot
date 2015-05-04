@@ -1,4 +1,6 @@
 """Smart cropping of an image by maximizing information entropy."""
+from __future__ import division
+
 import numpy as np
 
 
@@ -99,8 +101,8 @@ def entropy_crop(img, width, height, max_steps=10):
             bottom_y = bottom_y - slice_size
             bottom_slice = None
 
-    return img[top_y : top_y + height,
-               left_x + width : left_x : -1]
+    return img[top_y: top_y + height,
+               left_x + width: left_x: -1]
 
 
 if __name__ == '__main__':
@@ -111,7 +113,9 @@ if __name__ == '__main__':
     from astropy import log
     from astropy.visualization import scale_image
 
-    fts = fits.open('http://imagearchives.esac.esa.int/data_raw/ROSETTA/NAVCAM/RO-C-NAVCAM-2-PRL-MTP007-V1.0/DATA/CAM1/ROS_CAM1_20140922T060854F.FIT')
+    fts = fits.open('http://imagearchives.esac.esa.int/data_raw/ROSETTA/NAVCAM'
+                    '/RO-C-NAVCAM-2-PRL-MTP007-V1.0/DATA/CAM1'
+                    '/ROS_CAM1_20140922T060854F.FIT')
     img = fts[0].data
     width, height = 512, 256
     image_cropped = entropy_crop(img, width, height)
