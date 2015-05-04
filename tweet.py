@@ -48,7 +48,7 @@ def generate_tweet():
     # Create the cropped and scaled image
     image_cropped = entropy_crop(fts[0].data, width=512, height=256)
     image_scaled = scale_image(image_cropped, scale='linear',
-                               min_percent=0, max_percent=100)
+                               min_percent=0.05, max_percent=99.95)
     # Save the result as a JPG
     jpg_fn = '/tmp/rosettabot.jpg'
     log.info('Writing {0}'.format(jpg_fn))
