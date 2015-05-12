@@ -45,7 +45,7 @@ def generate_tweet():
     status = ('A new #Rosetta image was recently released!\n'
               '⌚ {}.\n'
               '📷 #{}.\n'
-              '⌛ {:.1f}s.\n'
+              '⌛ {:.2f}s.\n'
               '🔗 {}'.format(timestr, instrument, exptime, url))
     # Create the cropped and scaled image
     image_cropped = entropy_crop(fts[0].data, width=640, height=320)
