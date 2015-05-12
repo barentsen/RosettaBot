@@ -40,11 +40,13 @@ def generate_tweet():
     imgtime = fts[0].header['IMG-TIME']
     instrument = fts[0].header['INSTRUME'][8:]
     exptime = fts[0].header['EXPTIME']
-    timestr = Time(imgtime).datetime.strftime('%d %b %Y at %H:%M UT').lstrip("0")
+    timestr = Time(imgtime).datetime.strftime('%d %b %Y, %H:%M UT').lstrip("0")
     url = 'http://imagearchives.esac.esa.int/picture.php?/{0}'.format(imageid)
-    status = ('#Rosetta image taken on {1} by #{0}. '
-              'Exposure time: {2:.1f}s. '
-              '{3} #67P'.format(instrument, timestr, exptime, url))
+    status = ('A new #Rosetta image was recently released!\n'
+              '⌚ {}.\n'
+              '📷 #{}.\n'
+              '⌛ {:.1f}s.\n'
+              '🔗 {}'.format(timestr, instrument, exptime, url))
     # Create the cropped and scaled image
     image_cropped = entropy_crop(fts[0].data, width=640, height=320)
     image_scaled = scale_image(image_cropped, scale='linear',
@@ -75,7 +77,7 @@ if __name__ == '__main__':
             status, image_fn = generate_tweet()
             log.info(status)
             log.info('Saved {0}'.format(image_fn))
-            twitter, response = post_tweet(status, image_fn)
+            #twitter, response = post_tweet(status, image_fn)
             break
         except Exception as e:
             log.warning(e)
