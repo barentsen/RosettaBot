@@ -48,7 +48,7 @@ def generate_tweet():
               '⌛ {:.2f}s.\n'
               '🔗 {}'.format(timestr, instrument, exptime, url))
     # Create the cropped and scaled image
-    image_cropped = entropy_crop(fts[0].data, width=640, height=320)
+    image_cropped = entropy_crop(fts[0].data, width=600, height=300)
     image_scaled = scale_image(image_cropped, scale='linear',
                                min_percent=0.05, max_percent=99.95)
     # Save the result as an image
@@ -77,7 +77,7 @@ if __name__ == '__main__':
             status, image_fn = generate_tweet()
             log.info(status)
             log.info('Saved {0}'.format(image_fn))
-            #twitter, response = post_tweet(status, image_fn)
+            twitter, response = post_tweet(status, image_fn)
             break
         except Exception as e:
             log.warning(e)
