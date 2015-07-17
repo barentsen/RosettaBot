@@ -39,4 +39,4 @@ def save_list(output_fn, id_begin, id_end):
 
 
 if __name__ == '__main__':
-    save_list('data/rosetta-fits-files.csv', 8088, 9436+1)
+    save_list('data/rosetta-fits-files.csv', 9864, 10404+1)
